@@ -1,12 +1,17 @@
 package com.codewithakshay.expensetracker.user.entity;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,4 +121,78 @@ public class User {
         this.updatedAt = LocalDateTime.now();
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    private User(Builder builder) {
+        this.fullName = builder.fullName;
+        this.email = builder.email;
+        this.password = builder.password;
+        this.role = builder.role;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+//    Inner builder class (Builder Pattern)
+    public static class Builder {
+
+        private String fullName;
+        private String email;
+        private String password;
+        private Role role;
+
+        public Builder fullName(String fullName) {
+            this.fullName = fullName;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder role(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+
+    }
 }
