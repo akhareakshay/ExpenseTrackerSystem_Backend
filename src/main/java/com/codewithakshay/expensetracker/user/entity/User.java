@@ -151,6 +151,8 @@ public class User implements UserDetails {
         return enabled;
     }
 
+    public User() {}
+
     private User(Builder builder) {
         this.fullName = builder.fullName;
         this.email = builder.email;
