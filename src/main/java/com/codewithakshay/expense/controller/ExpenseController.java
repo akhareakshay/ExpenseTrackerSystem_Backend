@@ -5,6 +5,7 @@ import com.codewithakshay.expense.dto.ExpenseResponse;
 import com.codewithakshay.expense.entity.Expense;
 import com.codewithakshay.expense.service.ExpenseService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/expenses")
+@RequiredArgsConstructor
 public class ExpenseController {
 
     @Autowired

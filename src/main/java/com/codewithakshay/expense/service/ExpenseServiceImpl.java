@@ -8,6 +8,7 @@ import com.codewithakshay.expense.exception.ResourceNotFoundException;
 import com.codewithakshay.expense.repository.ExpenseRepository;
 import com.codewithakshay.user.entity.User;
 import com.codewithakshay.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ExpenseServiceImpl implements  ExpenseService{
 
     @Autowired
